@@ -1,0 +1,78 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/prime_bronze_saas/nextjs_space/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  hashedPassword String
+  role           String    @default("ADMIN")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Service {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  duration    Int       // minutes
+  price       Float
+  active      Boolean   @default(true)
+  category    String    @default("BRONZEAMENTO")
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  clientName  String
+  clientPhone String
+  clientEmail String?
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id])
+  date        DateTime
+  startTime   String   // HH:mm format
+  endTime     String   // HH:mm format
+  status      String   @default("PENDENTE") // PENDENTE, CONFIRMADO, CONCLUIDO, CANCELADO
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date, status])
+  @@index([serviceId])
+}
+
+model BusinessHours {
+  id        String  @id @default(cuid())
+  dayOfWeek Int     // 0=Sunday, 1=Monday... 6=Saturday
+  openTime  String  // HH:mm
+  closeTime String  // HH:mm
+  isOpen    Boolean @default(true)
+}
+
+model Settings {
+  id                String @id @default("default")
+  slotInterval      Int    @default(30) // minutes
+  maxSimultaneous   Int    @default(2)  // number of beds/equipment
+  whatsappNumber    String @default("5521965068219")
+  address           String @default("Rua Guaratá, 30 - Santa Terezinha, Mesquita - RJ")
+}
+
+model BlockedSlot {
+  id        String   @id @default(cuid())
+  date      DateTime
+  startTime String
+  endTime   String
+  reason    String?
+  createdAt DateTime @default(now())
+}
