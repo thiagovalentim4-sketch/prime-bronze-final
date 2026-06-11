@@ -31,10 +31,20 @@ async function seed() {
       { id: randomUUID(), name: 'Paredão Duplo (1 lado)', description: 'Bronzeamento com paredão duplo de um lado para resultado mais intenso.', duration: 30, price: 4500, category: 'duplo', active: true, sortOrder: 2 },
       { id: randomUUID(), name: 'Paredão Duplo (2 lados)', description: 'Bronzeamento completo com paredão duplo dos dois lados.', duration: 60, price: 8000, category: 'duplo', active: true, sortOrder: 3 },
       { id: randomUUID(), name: 'Banho de Lua', description: 'Tratamento exclusivo para clarear e realçar a pele com efeito luminoso.', duration: 45, price: 5000, category: 'especial', active: true, sortOrder: 4 },
+      { id: randomUUID(), name: 'Aluguel de Toalhas', description: 'Toalha limpa e higienizada para uso durante a sessão.', duration: 0, price: 500, category: 'extra', active: true, sortOrder: 5 },
     ]);
-    console.log('✓ 5 services seeded');
+    console.log('✓ 6 services seeded');
   } else {
-    console.log('✓ Services already exist');
+    // Check if towel service exists, add if missing
+    const towelExists = svcs.find(s => s.name === 'Aluguel de Toalhas');
+    if (!towelExists) {
+      await db.insert(servicesTable).values({
+        id: randomUUID(), name: 'Aluguel de Toalhas', description: 'Toalha limpa e higienizada para uso durante a sessão.', duration: 0, price: 500, category: 'extra', active: true, sortOrder: 5,
+      });
+      console.log('✓ Aluguel de Toalhas service added');
+    } else {
+      console.log('✓ Services already exist');
+    }
   }
 
   // Settings

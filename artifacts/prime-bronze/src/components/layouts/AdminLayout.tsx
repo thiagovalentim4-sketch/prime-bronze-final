@@ -14,12 +14,20 @@ const navItems = [
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const [location, navigate] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const user = getUser();
+  const [user, setUser] = useState(getUser());
 
   useEffect(() => {
-    if (!user) {
-      navigate('/admin/login');
-    }
+    const checkUser = () => {
+      const u = getUser();
+      if (!u) {
+        window.location.href = '/admin/login';
+      } else {
+        setUser(u);
+      }
+    };
+    checkUser();
+    const interval = setInterval(checkUser, 500);
+    return () => clearInterval(interval);
   }, []);
 
   if (!user) {

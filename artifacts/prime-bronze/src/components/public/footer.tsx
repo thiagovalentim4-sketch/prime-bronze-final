@@ -41,8 +41,11 @@ export function PublicFooter() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/40">
-          © 2026 Prime Bronze. Todos os direitos reservados.
+        <div className="mt-8 pt-6 border-t border-white/10 text-center">
+          <Link href="/admin/login" className="text-xs text-white/30 hover:text-[#D4AF37] transition-colors mb-2 inline-block">
+            Área Administrativa
+          </Link>
+          <p className="text-xs text-white/40">© 2026 Prime Bronze. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

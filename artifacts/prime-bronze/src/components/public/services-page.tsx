@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sun, Moon, Clock, DollarSign, Calendar } from 'lucide-react';
+import { Sun, Moon, Clock, DollarSign, Calendar, Sparkles } from 'lucide-react';
 import { Link } from 'wouter';
 
 interface Service {
@@ -62,6 +62,8 @@ export function ServicesPage() {
                     <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
                       {svc?.category === 'especial' ? (
                         <Moon className="w-6 h-6 text-[#D4AF37]" />
+                      ) : svc?.category === 'extra' ? (
+                        <Sparkles className="w-6 h-6 text-[#D4AF37]" />
                       ) : (
                         <Sun className="w-6 h-6 text-[#D4AF37]" />
                       )}

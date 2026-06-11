@@ -23,7 +23,7 @@ export function AdminLoginPage() {
       const data = await res.json();
       if (res.ok && data.token) {
         setAuth(data.token, data.user);
-        navigate('/admin');
+        window.location.href = '/admin';
       } else {
         toast.error(data?.error ?? 'Email ou senha inválidos');
       }

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, Suspense } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Clock, User, Phone, Mail, Sun, Moon, Check, ArrowLeft, ArrowRight, MessageCircle } from 'lucide-react';
+import { Calendar, Clock, User, Phone, Mail, Sun, Moon, Sparkles, Check, ArrowLeft, ArrowRight, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Service {
@@ -202,13 +202,13 @@ function BookingForm() {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        {svc?.category === 'TRATAMENTO' ? <Moon className="w-5 h-5 text-[#D4AF37]" /> : <Sun className="w-5 h-5 text-[#D4AF37]" />}
+                        {svc?.category === 'especial' ? <Moon className="w-5 h-5 text-[#D4AF37]" /> : svc?.category === 'extra' ? <Sparkles className="w-5 h-5 text-[#D4AF37]" /> : <Sun className="w-5 h-5 text-[#D4AF37]" />}
                         <div>
                           <p className="font-semibold text-white">{svc?.name ?? ''}</p>
                           <p className="text-white/40 text-xs">{svc?.duration ?? 0} min</p>
                         </div>
                       </div>
-                      <p className="text-[#D4AF37] font-bold">R$ {svc?.price?.toFixed?.(2)?.replace?.('.', ',') ?? '0,00'}</p>
+                      <p className="text-[#D4AF37] font-bold">{formatPrice(svc?.price ?? 0)}</p>
                     </div>
                   </button>
                 ))}
@@ -305,7 +305,7 @@ function BookingForm() {
                   <span className="text-white"><span className="text-[#D4AF37]">Serviço:</span> {currentService?.name ?? ''}</span>
                   <span className="text-white"><span className="text-[#D4AF37]">Data:</span> {formatDate(selectedDate)}</span>
                   <span className="text-white"><span className="text-[#D4AF37]">Horário:</span> {selectedTime}</span>
-                  <span className="text-white"><span className="text-[#D4AF37]">Valor:</span> R$ {currentService?.price?.toFixed?.(2)?.replace?.('.', ',') ?? '0,00'}</span>
+                  <span className="text-white"><span className="text-[#D4AF37]">Valor:</span> {formatPrice(currentService?.price ?? 0)}</span>
                 </div>
               </div>
 

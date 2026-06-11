@@ -35,8 +35,11 @@ export function PromocoesPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="block bg-gradient-to-br from-[#111] to-[#1a1a1a] rounded-2xl border border-[#D4AF37]/20 p-8 md:p-12 text-center hover:border-[#D4AF37]/40 transition-all cursor-pointer group"
         >
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#D4AF37]/5 flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform">
-            <Instagram className="w-10 h-10 text-[#D4AF37]" />
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-orange-500/20 flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform">
+            <Instagram className="w-10 h-10 text-white" style={{ filter: 'drop-shadow(0 0 4px rgba(225,48,108,0.6))' }} />
+          </div>
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 font-bold text-lg">@primebronze2026</span>
           </div>
           <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-3">
             Entre no nosso Instagram
@@ -44,9 +47,6 @@ export function PromocoesPage() {
           <p className="text-white/50 text-base md:text-lg max-w-md mx-auto mb-2">
             Para saber as promoções do mês e ficar por dentro de todas as novidades do Prime Bronze
           </p>
-          <div className="flex items-center justify-center gap-2 mt-6">
-            <span className="text-[#D4AF37] font-semibold text-lg">@primebronze2026</span>
-          </div>
           <div className="flex items-center justify-center gap-2 mt-6 text-white/40 text-sm">
             <Sparkles className="w-4 h-4 text-[#D4AF37]" />
             <span>Clique para acessar nosso perfil</span>
