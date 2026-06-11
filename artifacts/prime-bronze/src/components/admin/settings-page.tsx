@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Settings, Clock, Hash, Save } from 'lucide-react';
 import { toast } from 'sonner';
+import { authHeaders } from '@/lib/auth';
 
 const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
@@ -27,7 +28,7 @@ export function SettingsPage() {
 
   const fetchData = useCallback(async () => {
     try {
-      const res = await fetch('/api/admin/settings');
+      const res = await fetch('/api/admin/settings', { headers: authHeaders() });
       const data = await res.json();
       setSettings(data?.settings ?? { slotInterval: 30, maxSimultaneous: 2, whatsappNumber: '', address: '' });
       setHours(data?.hours ?? []);
@@ -43,7 +44,7 @@ export function SettingsPage() {
     try {
       const res = await fetch('/api/admin/settings', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify({ settings, hours }),
       });
       if (res.ok) {

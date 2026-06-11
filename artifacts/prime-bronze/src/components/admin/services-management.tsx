@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Plus, Pencil, Trash2, X, Sun, Moon } from 'lucide-react';
 import { toast } from 'sonner';
+import { authHeaders } from '@/lib/auth';
 
 interface Service {
   id: string;
@@ -22,7 +23,7 @@ export function ServicesManagement() {
 
   const fetchServices = useCallback(async () => {
     try {
-      const res = await fetch('/api/admin/services');
+      const res = await fetch('/api/admin/services', { headers: authHeaders() });
       const data = await res.json();
       setServices(data ?? []);
     } catch {
@@ -61,7 +62,7 @@ export function ServicesManagement() {
       const body = editing ? { ...form, id: editing.id } : form;
       const res = await fetch('/api/admin/services', {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(body),
       });
       if (res.ok) {
@@ -81,7 +82,7 @@ export function ServicesManagement() {
     try {
       await fetch('/api/admin/services', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify({ id: svc.id, active: !svc.active }),
       });
       fetchServices();

@@ -14,26 +14,48 @@ const navItems = [
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const [location, navigate] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [user, setUser] = useState(getUser());
+  const [user, setUser] = useState<ReturnType<typeof getUser>>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const checkUser = () => {
       const u = getUser();
-      if (!u) {
-        window.location.href = '/admin/login';
-      } else {
-        setUser(u);
-      }
+      setUser(u);
+      setReady(true);
     };
     checkUser();
-    const interval = setInterval(checkUser, 500);
-    return () => clearInterval(interval);
+    const t = setTimeout(checkUser, 200);
+    return () => clearTimeout(t);
   }, []);
 
-  if (!user) {
+  useEffect(() => {
+    const handleStorage = () => {
+      const u = getUser();
+      setUser(u);
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  useEffect(() => {
+    if (ready && !user) {
+      const t = setTimeout(() => {
+        window.location.href = '/admin/login';
+      }, 800);
+      return () => clearTimeout(t);
+    }
+  }, [ready, user]);
+
+  if (!ready || !user) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-white/60 text-sm">Verificando autenticação...</p>
+          <a href="/admin/login" className="text-[#D4AF37] text-xs hover:underline mt-2 inline-block">
+            Ir para login
+          </a>
+        </div>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Calendar, Search, Filter, CheckCircle, XCircle, Clock, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
+import { authHeaders } from '@/lib/auth';
 
 interface Booking {
   id: string;
@@ -44,7 +45,7 @@ export function BookingsManagement() {
       if (filterType !== 'all') params.set('filter', filterType);
       if (filterStatus !== 'all') params.set('status', filterStatus);
       if (filterDate) params.set('date', filterDate);
-      const res = await fetch(`/api/admin/bookings?${params.toString()}`);
+      const res = await fetch(`/api/admin/bookings?${params.toString()}`, { headers: authHeaders() });
       const data = await res.json();
       setBookings(data ?? []);
     } catch {
@@ -62,7 +63,7 @@ export function BookingsManagement() {
     try {
       const res = await fetch('/api/admin/bookings', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify({ id, status }),
       });
       if (res.ok) {

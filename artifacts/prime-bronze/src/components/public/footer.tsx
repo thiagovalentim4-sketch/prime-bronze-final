@@ -42,7 +42,7 @@ export function PublicFooter() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-white/10 text-center">
-          <Link href="/admin/login" className="text-xs text-white/30 hover:text-[#D4AF37] transition-colors mb-2 inline-block">
+          <Link href="/admin/login" className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/20 px-4 py-2 rounded-lg text-sm font-semibold transition-colors mb-4">
             Área Administrativa
           </Link>
           <p className="text-xs text-white/40">© 2026 Prime Bronze. Todos os direitos reservados.</p>

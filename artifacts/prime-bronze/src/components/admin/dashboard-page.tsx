@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Calendar, Users, DollarSign, TrendingUp, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { authHeaders } from '@/lib/auth';
 
 interface Stats {
   todayBookings: number;
@@ -26,12 +27,12 @@ export function DashboardPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/admin/stats').then((r) => r.json()),
-      fetch('/api/admin/bookings?filter=today').then((r) => r.json()),
+      fetch('/api/admin/stats', { headers: authHeaders() }).then((r) => r.json()),
+      fetch('/api/admin/bookings?filter=today', { headers: authHeaders() }).then((r) => r.json()),
     ])
       .then(([s, b]) => {
         setStats(s ?? null);
-        setTodayBookings(b ?? []);
+        setTodayBookings(Array.isArray(b) ? b : []);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
