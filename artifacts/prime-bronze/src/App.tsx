@@ -10,6 +10,9 @@ import { ServicesPageWrapper } from "@/pages/ServicesPageWrapper";
 import { AboutPageWrapper } from "@/pages/AboutPageWrapper";
 import { ContactPageWrapper } from "@/pages/ContactPageWrapper";
 import { BookingPageWrapper } from "@/pages/BookingPageWrapper";
+import { FaqPageWrapper } from "@/pages/FaqPageWrapper";
+import { CuidadosPageWrapper } from "@/pages/CuidadosPageWrapper";
+import { PromocoesPageWrapper } from "@/pages/PromocoesPageWrapper";
 
 // Admin pages
 import { AdminLoginPageWrapper } from "@/pages/admin/AdminLoginPageWrapper";
@@ -17,6 +20,7 @@ import { AdminDashboardWrapper } from "@/pages/admin/AdminDashboardWrapper";
 import { AdminBookingsWrapper } from "@/pages/admin/AdminBookingsWrapper";
 import { AdminServicesWrapper } from "@/pages/admin/AdminServicesWrapper";
 import { AdminSettingsWrapper } from "@/pages/admin/AdminSettingsWrapper";
+import { AdminReportsWrapper } from "@/pages/admin/AdminReportsWrapper";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +55,15 @@ function Router() {
       <Route path="/agendar">
         <PublicLayout><BookingPageWrapper /></PublicLayout>
       </Route>
+      <Route path="/faq">
+        <PublicLayout><FaqPageWrapper /></PublicLayout>
+      </Route>
+      <Route path="/cuidados">
+        <PublicLayout><CuidadosPageWrapper /></PublicLayout>
+      </Route>
+      <Route path="/promocoes">
+        <PublicLayout><PromocoesPageWrapper /></PublicLayout>
+      </Route>
 
       {/* Admin routes */}
       <Route path="/admin/login">
@@ -64,6 +77,9 @@ function Router() {
       </Route>
       <Route path="/admin/configuracoes">
         <AdminLayout><AdminSettingsWrapper /></AdminLayout>
+      </Route>
+      <Route path="/admin/relatorios">
+        <AdminLayout><AdminReportsWrapper /></AdminLayout>
       </Route>
       <Route path="/admin">
         <AdminLayout><AdminDashboardWrapper /></AdminLayout>

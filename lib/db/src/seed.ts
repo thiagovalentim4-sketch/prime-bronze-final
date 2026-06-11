@@ -26,11 +26,11 @@ async function seed() {
   const svcs = await db.select().from(servicesTable);
   if (svcs.length === 0) {
     await db.insert(servicesTable).values([
-      { id: randomUUID(), name: 'Bronzeamento Simples (1 lado)', description: 'Sessão de bronzeamento de um lado do corpo.', duration: 30, price: 3500, category: 'simples', isActive: true },
-      { id: randomUUID(), name: 'Bronzeamento Simples (2 lados)', description: 'Sessão completa de bronzeamento dos dois lados do corpo.', duration: 60, price: 6000, category: 'simples', isActive: true },
-      { id: randomUUID(), name: 'Paredão Duplo (1 lado)', description: 'Bronzeamento com paredão duplo de um lado para resultado mais intenso.', duration: 30, price: 4500, category: 'duplo', isActive: true },
-      { id: randomUUID(), name: 'Paredão Duplo (2 lados)', description: 'Bronzeamento completo com paredão duplo dos dois lados.', duration: 60, price: 8000, category: 'duplo', isActive: true },
-      { id: randomUUID(), name: 'Banho de Lua', description: 'Tratamento exclusivo para clarear e realçar a pele com efeito luminoso.', duration: 45, price: 5000, category: 'especial', isActive: true },
+      { id: randomUUID(), name: 'Bronzeamento Simples (1 lado)', description: 'Sessão de bronzeamento de um lado do corpo.', duration: 30, price: 3500, category: 'simples', active: true, sortOrder: 0 },
+      { id: randomUUID(), name: 'Bronzeamento Simples (2 lados)', description: 'Sessão completa de bronzeamento dos dois lados do corpo.', duration: 60, price: 6000, category: 'simples', active: true, sortOrder: 1 },
+      { id: randomUUID(), name: 'Paredão Duplo (1 lado)', description: 'Bronzeamento com paredão duplo de um lado para resultado mais intenso.', duration: 30, price: 4500, category: 'duplo', active: true, sortOrder: 2 },
+      { id: randomUUID(), name: 'Paredão Duplo (2 lados)', description: 'Bronzeamento completo com paredão duplo dos dois lados.', duration: 60, price: 8000, category: 'duplo', active: true, sortOrder: 3 },
+      { id: randomUUID(), name: 'Banho de Lua', description: 'Tratamento exclusivo para clarear e realçar a pele com efeito luminoso.', duration: 45, price: 5000, category: 'especial', active: true, sortOrder: 4 },
     ]);
     console.log('✓ 5 services seeded');
   } else {
@@ -40,12 +40,10 @@ async function seed() {
   // Settings
   const stg = await db.select().from(settingsTable);
   if (stg.length === 0) {
-    await db.insert(settingsTable).values([
-      { id: randomUUID(), key: 'slot_interval', value: '30' },
-      { id: randomUUID(), key: 'max_simultaneous', value: '2' },
-      { id: randomUUID(), key: 'whatsapp_number', value: '5521965068219' },
-      { id: randomUUID(), key: 'address', value: 'Rua Guaratá, 30 - Santa Terezinha, Mesquita - RJ' },
-    ]);
+    await db.insert(settingsTable).values({
+      id: 'default', slotInterval: 30, maxSimultaneous: 2,
+      whatsappNumber: '5521965068219', address: 'Rua Guaratá, 30 - Santa Terezinha, Mesquita - RJ',
+    });
     console.log('✓ Settings seeded');
   }
 
@@ -56,9 +54,9 @@ async function seed() {
     for (let day = 0; day <= 6; day++) {
       rows.push({
         id: randomUUID(), dayOfWeek: day,
-        openTime: '09:00',
-        closeTime: day === 6 ? '18:00' : '20:00',
-        isOpen: day >= 1 && day <= 6,
+        openTime: day === 0 ? '08:00' : '09:00',
+        closeTime: day === 0 ? '12:00' : day === 6 ? '18:00' : '20:00',
+        isOpen: day >= 0 && day <= 6,
       });
     }
     await db.insert(businessHoursTable).values(rows);

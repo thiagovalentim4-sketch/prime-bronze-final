@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { LayoutDashboard, Calendar, Scissors, Settings, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Calendar, Scissors, BarChart3, Settings, LogOut, Menu, X } from 'lucide-react';
 import { getUser, clearAuth } from '@/lib/auth';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Agendamentos', href: '/admin/agendamentos', icon: Calendar },
   { label: 'Serviços', href: '/admin/servicos', icon: Scissors },
+  { label: 'Relatórios', href: '/admin/relatorios', icon: BarChart3 },
   { label: 'Configurações', href: '/admin/configuracoes', icon: Settings },
 ];
 

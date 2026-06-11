@@ -13,6 +13,10 @@ interface Service {
   active: boolean;
 }
 
+function formatPrice(cents: number) {
+  return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
 export function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +60,7 @@ export function ServicesPage() {
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
-                      {svc?.category === 'TRATAMENTO' ? (
+                      {svc?.category === 'especial' ? (
                         <Moon className="w-6 h-6 text-[#D4AF37]" />
                       ) : (
                         <Sun className="w-6 h-6 text-[#D4AF37]" />
@@ -70,7 +74,7 @@ export function ServicesPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-[#D4AF37] font-bold text-2xl">R$ {(svc?.price ?? 0)?.toFixed?.(2)?.replace?.('.', ',') ?? '0,00'}</p>
+                    <p className="text-[#D4AF37] font-bold text-2xl">{formatPrice(svc?.price ?? 0)}</p>
                   </div>
                 </div>
                 <p className="text-white/50 text-sm mt-4">{svc?.description ?? ''}</p>

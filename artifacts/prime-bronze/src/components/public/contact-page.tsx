@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Clock, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Clock, MessageCircle, Instagram } from 'lucide-react';
 
 export function ContactPage() {
   return (
@@ -56,6 +56,27 @@ export function ContactPage() {
             </div>
 
             <div className="bg-[#111] rounded-xl p-6 border border-[#D4AF37]/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
+                  <Instagram className="w-5 h-5 text-[#D4AF37]" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">Instagram</h3>
+                  <p className="text-white/50 text-sm">@primebronze2026</p>
+                </div>
+              </div>
+              <a
+                href="https://www.instagram.com/primebronze2026"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white font-bold text-sm px-5 py-2.5 rounded-full hover:opacity-90 transition-opacity"
+              >
+                <Instagram className="w-4 h-4" />
+                Seguir no Instagram
+              </a>
+            </div>
+
+            <div className="bg-[#111] rounded-xl p-6 border border-[#D4AF37]/10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
                   <Clock className="w-5 h-5 text-[#D4AF37]" />
@@ -64,7 +85,7 @@ export function ContactPage() {
                   <h3 className="font-semibold text-white">Horário de Funcionamento</h3>
                   <p className="text-white/50 text-sm">Segunda a Sexta: 9h às 20h</p>
                   <p className="text-white/50 text-sm">Sábado: 9h às 18h</p>
-                  <p className="text-white/50 text-sm">Domingo: Fechado</p>
+                  <p className="text-white/50 text-sm">Domingo: 8h às 12h</p>
                 </div>
               </div>
             </div>

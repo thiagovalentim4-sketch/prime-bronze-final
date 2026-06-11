@@ -105,6 +105,10 @@ function BookingForm() {
     }
   };
 
+  const formatPrice = (cents: number) => {
+    return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
+
   const formatDate = (d: string) => {
     if (!d) return '';
     const [y, m, day] = d.split('-');
@@ -138,7 +142,7 @@ function BookingForm() {
               <p className="text-white/70 text-sm"><span className="text-[#D4AF37]">Serviço:</span> {currentService?.name ?? ''}</p>
               <p className="text-white/70 text-sm"><span className="text-[#D4AF37]">Data:</span> {formatDate(selectedDate)}</p>
               <p className="text-white/70 text-sm"><span className="text-[#D4AF37]">Horário:</span> {selectedTime}</p>
-              <p className="text-white/70 text-sm"><span className="text-[#D4AF37]">Valor:</span> R$ {currentService?.price?.toFixed?.(2)?.replace?.('.', ',') ?? '0,00'}</p>
+              <p className="text-white/70 text-sm"><span className="text-[#D4AF37]">Valor:</span> {formatPrice(currentService?.price ?? 0)}</p>
             </div>
 
             <button

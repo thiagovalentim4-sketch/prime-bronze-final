@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { db, usersTable, servicesTable, bookingsTable, settingsTable, businessHoursTable } from "@workspace/db";
-import { eq, and, gte, lte, ne, inArray, asc, desc } from "drizzle-orm";
+import { eq, and, gte, lte, ne, inArray, asc, desc, count } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -304,6 +304,74 @@ router.put("/settings", requireAuth, async (req: Request, res: Response) => {
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Erro ao salvar" });
+  }
+});
+
+// GET /api/admin/reports
+router.get("/reports", requireAuth, async (req: Request, res: Response) => {
+  try {
+    const { period = "daily" } = req.query as { period: string };
+    const now = new Date();
+    let startDate: Date, endDate: Date;
+
+    if (period === "daily") {
+      startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    } else if (period === "weekly") {
+      startDate = new Date(now);
+      startDate.setDate(startDate.getDate() - startDate.getDay());
+      startDate.setHours(0, 0, 0, 0);
+      endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 6);
+      endDate.setHours(23, 59, 59);
+    } else {
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+    }
+
+    const allBookings = await db
+      .select({
+        id: bookingsTable.id,
+        status: bookingsTable.status,
+        serviceId: bookingsTable.serviceId,
+        serviceName: servicesTable.name,
+        servicePrice: servicesTable.price,
+      })
+      .from(bookingsTable)
+      .leftJoin(servicesTable, eq(bookingsTable.serviceId, servicesTable.id))
+      .where(and(gte(bookingsTable.date, startDate), lte(bookingsTable.date, endDate)));
+
+    const totalBookings = allBookings.length;
+    const completed = allBookings.filter((b) => b.status === "CONCLUIDO").length;
+    const pending = allBookings.filter((b) => b.status === "PENDENTE").length;
+    const cancelled = allBookings.filter((b) => b.status === "CANCELADO").length;
+    const totalRevenue = allBookings
+      .filter((b) => b.status !== "CANCELADO")
+      .reduce((sum, b) => sum + (b.servicePrice ?? 0), 0);
+
+    const serviceCounts: Record<string, { name: string; count: number; revenue: number }> = {};
+    for (const b of allBookings) {
+      if (b.status === "CANCELADO") continue;
+      const name = b.serviceName ?? "Desconhecido";
+      if (!serviceCounts[name]) serviceCounts[name] = { name, count: 0, revenue: 0 };
+      serviceCounts[name].count++;
+      serviceCounts[name].revenue += b.servicePrice ?? 0;
+    }
+
+    const topServices = Object.values(serviceCounts).sort((a, b) => b.count - a.count).slice(0, 5);
+
+    res.json({
+      period,
+      totalBookings,
+      totalRevenue,
+      completed,
+      pending,
+      cancelled,
+      topServices,
+    });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Erro ao gerar relatório" });
   }
 });
 

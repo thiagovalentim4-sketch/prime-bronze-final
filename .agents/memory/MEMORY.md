@@ -1,0 +1,24 @@
+- [Prime Bronze overview](replit.md) — Tanning studio booking system migrated from Next.js to Replit pnpm stack
+- [API routes](api-routes.md) — Public: `/api/public/services`, `/api/public/slots`, `/api/public/bookings`. Admin: `/api/admin/auth/*`, `/api/admin/services`, `/api/admin/bookings`, `/api/admin/reports?period=daily|weekly|monthly`, `/api/admin/settings`
+- [Database schema](schema.md) — Services, bookings, users, settings, business_hours, blocked_slots via Drizzle ORM
+- [Seed data](seed.md) — Admin: `admin@primebronze.com` / `primebronze2026`. 5 services, Sunday 08:00-12:00 hours, default settings
+- [Theme](theme.md) — Dark gold/black (#D4AF37), Playfair Display font, Tailwind, framer-motion
+- [Price format](formatting.md) — Cents in DB, display: `(cents/100).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})`
+- [Build gotchas](build.md) — `PORT` and `BASE_PATH` env vars required for Vite build; `count` must be imported from `drizzle-orm`
+- [Seed column names](seed-fix.md) — Use `active` (not `isActive`), `sortOrder` required, settings `id: 'default'`
+- [API port](api-port.md) — Runs on 8080, not 5000 (replit.md outdated)
+- [Typecheck errors](typecheck.md) — Pre-existing errors in `theme-provider.tsx`, `calendar.tsx`, `input-group.tsx` from Next.js migration
+- [Instagram](instagram.md) — Handle: `@primebronze2026`, linked in Promocoes and Contact pages
+- [Sunday hours](sunday-hours.md) — 08:00-12:00 in seed, contact page, footer
+- [Auth flow](auth.md) — JWT in localStorage, `authHeaders()` helper, login at `/admin/login`
+- [Booking flow](booking.md) — 4-step wizard, WhatsApp confirmation pre-filled with booking details
+- [Reports](reports.md) — Daily/weekly/monthly tabs with stat cards and top-5 services chart
+- [Admin nav](admin-nav.md) — Relatorios added with BarChart3 icon
+- [Public nav](public-nav.md) — Promocoes link between Servicos and Sobre
+- [WhatsApp](whatsapp.md) — (21) 96506-8219, floating button + confirmation link
+- [Services pricing](services-pricing.md) — Simples 1 lado R$35, 2 lados R$60; Duplo 1 lado R$45, 2 lados R$80; Banho de Lua R$50
+- [Content policy](content-policy.md) — Cuidados page kept text-only (no explicit images)
+- [Frontend routes](frontend-routes.md) — /, /servicos, /promocoes, /faq, /cuidados, /sobre, /contato, /agendar, /admin/*
+- [Workspace structure](workspace.md) — artifacts/prime-bronze (web), artifacts/api-server (API), lib/db (shared), lib/api-spec (shared)
+- [Product location](product-location.md) — Rua Guaratá, 30 - Santa Terezinha, Mesquita - RJ
+- [Product hours](product-hours.md) — Seg-Sex: 9h-20h, Sáb: 9h-18h, Dom: 8h-12h

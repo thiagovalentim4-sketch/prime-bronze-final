@@ -26,13 +26,16 @@ export function PublicFooter() {
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-[#D4AF37] shrink-0" />
-              <span>Seg-Sex: 9h-20h | Sáb: 9h-18h</span>
+              <span>Seg-Sex: 9h-20h | Sáb: 9h-18h | Dom: 8h-12h</span>
             </div>
           </div>
 
           <div className="flex flex-col gap-3">
             <p className="text-[#D4AF37] font-semibold text-sm">Navegação</p>
             <Link href="/servicos" className="text-white/70 text-sm hover:text-[#D4AF37] transition-colors">Serviços</Link>
+            <Link href="/promocoes" className="text-white/70 text-sm hover:text-[#D4AF37] transition-colors">Promoções</Link>
+            <Link href="/faq" className="text-white/70 text-sm hover:text-[#D4AF37] transition-colors">Perguntas Frequentes</Link>
+            <Link href="/cuidados" className="text-white/70 text-sm hover:text-[#D4AF37] transition-colors">Cuidados</Link>
             <Link href="/sobre" className="text-white/70 text-sm hover:text-[#D4AF37] transition-colors">Sobre</Link>
             <Link href="/agendar" className="text-white/70 text-sm hover:text-[#D4AF37] transition-colors">Agendar</Link>
           </div>
